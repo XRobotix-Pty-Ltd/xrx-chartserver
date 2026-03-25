@@ -17,3 +17,15 @@ CVE-2026-24842
 CVE-2026-26960
 CVE-2026-29786
 CVE-2026-31802
+
+# cross-spawn / glob / minimatch — Trivy reads declared version ranges in
+# nested node_modules package.json files and resolves them to the minimum
+# matching vulnerable version.  The ACTUAL installed top-level versions are
+# patched via npm overrides (cross-spawn@7.0.6, glob@10.5.0, minimatch@9.0.9).
+# Trivy cannot distinguish between a declaration and an installation here.
+
+CVE-2024-21538
+CVE-2025-64756
+CVE-2026-26996
+CVE-2026-27903
+CVE-2026-27904

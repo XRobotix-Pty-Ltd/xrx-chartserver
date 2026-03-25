@@ -184,7 +184,7 @@ jobs:
           IMAGE_REF="${{ env.DOCKER_IMAGE }}:${tag}.${SHORT_SHA}"
           echo "Scanning image: $IMAGE_REF"
 
-          trivy image \
+          TRIVY_DISABLE_VEX_NOTICE=true trivy image \
             --format table \
             --exit-code 0 \
             --ignore-unfixed \
