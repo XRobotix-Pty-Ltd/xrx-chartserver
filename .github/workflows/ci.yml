@@ -142,6 +142,23 @@ jobs:
     if: github.event_name == 'push'
     continue-on-error: true
     steps:
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Pull image for scanning
+        env:
+          CI_COMMIT_BRANCH: ${{ github.ref_name }}
+          CI_COMMIT_SHA: ${{ github.sha }}
+        run: |
+          SHORT_SHA=${CI_COMMIT_SHA:0:8}
+          DEFAULT_BRANCH="${{ github.event.repository.default_branch }}"
+          if [[ "$CI_COMMIT_BRANCH" == "$DEFAULT_BRANCH" ]]; then
+            tag="latest"
+          else
+            tag="$CI_COMMIT_BRANCH"
+          fi
+          docker pull "${{ env.DOCKER_IMAGE }}:${tag}.${SHORT_SHA}"
+
       - name: Install Trivy
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
