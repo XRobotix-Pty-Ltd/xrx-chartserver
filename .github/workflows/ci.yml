@@ -27,6 +27,16 @@ jobs:
       - name: Check for base dependency changes
         id: check_changes
         run: |
+          # Always build if the base image doesn't exist yet
+          if ! docker manifest inspect xrobotix/xrx-chartserver:BASE_1 > /dev/null 2>&1; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          # On first commit HEAD~1 doesn't exist — treat as changed
+          if ! git rev-parse HEAD~1 > /dev/null 2>&1; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
           if git diff --name-only HEAD~1 HEAD | grep -qE '^(Dockerfile\.base|api/requirements\.txt|renderer/package\.json|renderer/package-lock\.json)$'; then
             echo "changed=true" >> $GITHUB_OUTPUT
           else

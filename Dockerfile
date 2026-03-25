@@ -1,4 +1,4 @@
-ARG BASE_TAG=latest
+ARG BASE_TAG=1
 FROM xrobotix/xrx-chartserver:BASE_${BASE_TAG}
 
 WORKDIR /app
