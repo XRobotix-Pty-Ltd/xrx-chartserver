@@ -16,7 +16,7 @@ env:
 jobs:
   # Prebuild — rebuild base image only when heavy deps change
   docker-build-base:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
       - name: Checkout code
@@ -48,7 +48,7 @@ jobs:
 
   # Build main application image
   docker-build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: [docker-build-base]
     if: always() && github.event_name == 'push' && (needs.docker-build-base.result == 'success' || needs.docker-build-base.result == 'skipped')
     outputs:
@@ -106,7 +106,7 @@ jobs:
 
   # Run tests inside the built container
   docker-test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: docker-build
     if: github.event_name == 'push'
     steps:
@@ -130,7 +130,7 @@ jobs:
 
   # Security scan with Trivy (non-blocking)
   trivy-scan:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: docker-test
     if: github.event_name == 'push'
     continue-on-error: true
@@ -164,7 +164,7 @@ jobs:
 
   # PR builds — build + test only, no push/deploy
   pr-build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
