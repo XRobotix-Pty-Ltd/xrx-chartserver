@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+  body {{ background: {background}; overflow: hidden; }}
+  #chart {{ width: {width}px; height: {height}px; }}
+</style>
+</head>
+<body>
+<div id="chart"></div>
+<script src="{cdn}"></script>
+<script>
+(function () {{
+  var el = document.getElementById('chart');
+  var chart;
+  if ('{provider}' === 'echarts') {{
+    chart = echarts.init(el);
+  }} else {{
+    var ctx = document.createElement('canvas');
+    ctx.width = {width};
+    ctx.height = {height};
+    el.appendChild(ctx);
+    chart = {{ setOption: function(opt) {{ new Chart(ctx, opt); }} }};
+  }}
+  {init_call}
+}})();
+</script>
+</body>
+</html>

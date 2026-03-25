@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+  body {{ background: {background}; overflow: hidden; }}
+  #mermaid-container {{ max-width: {width}px; }}
+  #mermaid-container svg {{ max-width: 100%; height: auto; }}
+</style>
+</head>
+<body>
+<div id="mermaid-container">
+<pre class="mermaid">{definition}</pre>
+</div>
+<script src="{cdn}"></script>
+<script>
+mermaid.initialize({{ startOnLoad: true, securityLevel: 'loose', theme: 'default' }});
+</script>
+</body>
+</html>
