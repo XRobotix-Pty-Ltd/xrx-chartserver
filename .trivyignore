@@ -1,0 +1,19 @@
+# ============================================================
+# Accepted-risk suppressions — reviewed 2026-03-25
+# ============================================================
+#
+# canvas@2 → @mapbox/node-pre-gyp@1.0.11 → tar@6.x
+# -------------------------------------------------------
+# All CVEs below are in @mapbox/node-pre-gyp, a BUILD-TIME tool that
+# unpacks pre-built canvas binaries during `npm install`.  It is never
+# called at runtime.  The only fix (canvas@3) requires a non-trivial
+# migration of chartjs-node-canvas (API breaking change) and is tracked
+# in a separate work item.  The actual installed `tar` is overridden to
+# >=7.5.11 via npm overrides, so runtime tar is not affected.
+
+CVE-2026-23745
+CVE-2026-23950
+CVE-2026-24842
+CVE-2026-26960
+CVE-2026-29786
+CVE-2026-31802
