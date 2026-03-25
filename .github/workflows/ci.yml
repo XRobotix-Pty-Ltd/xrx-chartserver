@@ -142,6 +142,9 @@ jobs:
     if: github.event_name == 'push'
     continue-on-error: true
     steps:
+      - name: Checkout code
+        run: git clone --depth=1 https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git .
+
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
@@ -186,7 +189,7 @@ jobs:
             --exit-code 0 \
             --ignore-unfixed \
             --ignorefile .trivyignore \
-            --vuln-type os,library \
+            --pkg-types os,library \
             --severity CRITICAL,HIGH \
             "$IMAGE_REF"
 
