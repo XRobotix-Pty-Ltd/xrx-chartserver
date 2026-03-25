@@ -9,7 +9,7 @@ RUN pip3 install --no-cache-dir -r api/requirements.txt
 
 # --- Node.js dependencies ---
 COPY renderer/package*.json renderer/
-RUN cd renderer && npm ci --omit=dev
+RUN cd renderer && npm ci --omit=dev --legacy-peer-deps
 
 # --- Application code ---
 COPY api/ api/
